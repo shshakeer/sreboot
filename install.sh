@@ -1,6 +1,6 @@
-echo "Fetching Inatllation script and dependent files from git"
+#echo "Fetching Inatllation script and dependent files from git"
 
-git clone https://github.com/shakeerdcm/sreboot.git
+#git clone https://github.com/shakeerdcm/sreboot.git
 
 #cd sreboot
 
