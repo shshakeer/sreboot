@@ -1,39 +1,45 @@
-provider "google" {
-  region = var.region
-}
+# GKE cluster
+resource "google_container_cluster" "primary" {
+  name     = "${var.project_name}-gke"
+  location = var.region
 
-resource "google_compute_network" "default" {
-  name                    = var.network_name
-  auto_create_subnetworks = false
-}
+  # We can't create a cluster with no node pool defined, but we want to only use
+  # separately managed node pools. So we create the smallest possible default
+  # node pool and immediately delete it.
 
-resource "google_compute_subnetwork" "default" {
-  name                     = var.network_name
-  ip_cidr_range            = "10.0.0.0/24"
-  network                  = google_compute_network.default.self_link
-  region                   = var.region
-  private_ip_google_access = true
-}
+  remove_default_node_pool = true
+  initial_node_count       = 1
 
-data "google_client_config" "current" {
-}
-
-data "google_container_engine_versions" "default" {
-  location = var.location
-}
-
-resource "google_container_cluster" "default" {
-  name               = var.network_name
-  location           = var.location
-  initial_node_count = 2
-  min_master_version = data.google_container_engine_versions.default.latest_master_version
-  network            = google_compute_subnetwork.default.name
-  subnetwork         = google_compute_subnetwork.default.name
-
-  enable_legacy_abac = true
-  node_config {
-    machine_type = "e2-small"
+  network    = google_compute_network.vpc_network.name
+  subnetwork = google_compute_subnetwork.vpc_subnet.name
+  provisioner "local-exec" {
+    command = "/bin/bash bootstrap.sh"
   }
+}
 
+# Separately Managed Node Pool
+resource "google_container_node_pool" "primary_nodes" {
+  name       = "${google_container_cluster.primary.name}-node-pool"
+  location   = var.region
+  cluster    = google_container_cluster.primary.name
+  node_count = var.gke_num_nodes
+
+  node_config {
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+    ]
+
+    labels = {
+      env = var.project_name
+    }
+
+    # preemptible  = true
+    machine_type = "e2-micro"
+    tags         = ["gke-node", "${var.project_name}-gke"]
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
+  }
 }
 
