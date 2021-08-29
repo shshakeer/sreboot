@@ -3,7 +3,7 @@ echo "Please enter name of gce instance: "
 read gce
 echo "Please Enter name of the project: "
 read proj
-echo "Please type to delete to destroy instance: ", $gce, "in project", $proj
+echo "Please type  'delete' to destroy instance: '$gce', in project: '$proj' "
 
 read confirm
 
@@ -14,5 +14,5 @@ echo "executing deletion script"
 gcloud compute instances delete $gce --project="$proj"
 
 else
-echo "User not confirmed on deletion of gce"
+echo "You have entered:  '$confirm' ,deletion script expects only 'delete' no other words accepted "
 fi
