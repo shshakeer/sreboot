@@ -4,7 +4,6 @@ pipeline {
                 timestamps ()
             }
     environment {
-    #SSHUserPrivateKey = credentials('sreboot')
        CREDENTIALS_ID = 'sreboot'
   }
 
