@@ -1,36 +1,46 @@
 pipeline {
-    agent  any
-        options {
-                timestamps ()
-            }
-    environment {
-       CREDENTIALS_ID = 'sreboot'
+
+  agent any
+
+  environment {
+    SVC_ACCOUNT_KEY = credentials('sreboot')
   }
 
-    stages {
-        stage('checkout') {
-            steps {
-                 script{
-                        dir("terraform")
-                        {
-                            git "https://github.com/shakeerdcm/sreboot.git"
-                        }
-                    }
-                }
-            }
-    stage('Plan') {
-            steps {
-                sh 'pwd;cd TERRAFORM/GCEinstance ; terraform init -input=false'
-                sh 'pwd;cd TERRAFORM/GCEinstance ; terraform workspace new ${environment}'
-                sh 'pwd;cd TERRAFORM/GCEinstance ; terraform workspace select ${environment}'
-                sh "pwd;cd TERRAFORM/GCEinstance ;terraform plan -input=false -out tfplan "
-                sh 'pwd;cd TERRAFORM/GCEinstance ;terraform show -no-color tfplan > tfplan.txt'
-            }
-        }
-    stage('Apply') {
-            steps {
-                sh "pwd;cd TERRAFORM/GCEinstance ; terraform apply -input=false tfplan"
-            }
-        }
+  stages {
+
+    stage('Checkout') {
+      steps {
+        checkout scm
+        sh 'mkdir -p creds' 
+        sh 'echo $SVC_ACCOUNT_KEY | base64 -d > ./creds/serviceaccount.json'
+      }
     }
+
+    stage('TF Plan') {
+      steps {
+        container('terraform') {
+          sh 'terraform init'
+          sh 'terraform plan -out myplan'
+        }
+      }      
+    }
+
+    stage('Approval') {
+      steps {
+        script {
+          def userInput = input(id: 'confirm', message: 'Apply Terraform?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terraform', name: 'confirm'] ])
+        }
+      }
+    }
+
+    stage('TF Apply') {
+      steps {
+        container('terraform') {
+          sh 'terraform apply -input=false myplan'
+        }
+      }
+    }
+
+  } 
+
 }
