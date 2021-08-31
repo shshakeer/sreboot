@@ -19,7 +19,7 @@ pipeline {
     stage('TF destroy') {
       steps {
           sh 'cd TERRAFORM/GCEinstance ; terraform init'
-          sh 'cd TERRAFORM/GCEinstance ; terraform destroy'
+          sh 'cd TERRAFORM/GCEinstance ; terraform destroy -input=false'
         }
     }
 
