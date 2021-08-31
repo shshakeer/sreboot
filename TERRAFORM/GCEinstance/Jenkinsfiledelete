@@ -33,7 +33,7 @@ pipeline {
 
     stage('TF Destroy') {
       steps {
-          sh 'cd TERRAFORM/GCEinstance ;terraform apply  myplandestroy -auto-approve'
+          sh 'cd TERRAFORM/GCEinstance ;terraform apply -input=false myplandestroy'
         }
       }
 
