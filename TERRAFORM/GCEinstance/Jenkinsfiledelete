@@ -16,13 +16,26 @@ pipeline {
       }
     }
 
-    stage('TF destroy') {
+    stage('TF Plan') {
       steps {
           sh 'cd TERRAFORM/GCEinstance ; terraform init'
-          sh 'cd TERRAFORM/GCEinstance ; terraform destroy -input=false'
+          sh 'cd TERRAFORM/GCEinstance ; terraform plan -destroy  -out myplandestroy'
         }
     }
 
+    stage('Approval') {
+      steps {
+        script {
+          def userInput = input(id: 'confirm', message: 'Destroy Terraform?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Destroy terraform', name: 'confirm'] ])
+        }
+      }
+    }
+
+    stage('TF Destroy') {
+      steps {
+          sh 'cd TERRAFORM/GCEinstance ;terraform apply  myplandestroy -auto-approve'
+        }
+      }
 
   } 
 
