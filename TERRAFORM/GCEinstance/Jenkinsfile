@@ -19,7 +19,7 @@ pipeline {
     stage('TF Plan') {
       steps {
           sh 'cd TERRAFORM/GCEinstance ; terraform init'
-          sh 'terraform plan -out myplan'
+          sh 'cd TERRAFORM/GCEinstance ; terraform plan -out myplan'
         }
     }
 
@@ -33,7 +33,7 @@ pipeline {
 
     stage('TF Apply') {
       steps {
-          sh 'terraform apply -input=false myplan'
+          sh 'cd TERRAFORM/GCEinstance ;terraform apply -input=false myplan'
         }
       }
 
