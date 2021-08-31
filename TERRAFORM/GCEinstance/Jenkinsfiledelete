@@ -19,7 +19,6 @@ pipeline {
     stage('TF Plan') {
       steps {
           sh 'cd TERRAFORM/GCEinstance ; terraform init'
-          sh 'cp ../../../GCE creation/TERRAFORM/GCEinstance/terraform.tfstate TERRAFORM/GCEinstance'
           sh 'cd TERRAFORM/GCEinstance ; terraform plan -destroy  -out myplandestroy'
         }
     }

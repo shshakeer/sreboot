@@ -17,3 +17,8 @@ variable "cred_file" {
 variable "network_name" {
     type = string
 }
+
+variable "bucket_name" {
+description = "GCS Bucket name. Value should be unique ."
+type        = string
+}
