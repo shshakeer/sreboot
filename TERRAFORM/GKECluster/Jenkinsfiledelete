@@ -18,8 +18,8 @@ pipeline {
 
     stage('TF Plan') {
       steps {
-          sh 'cd TERRAFORM/GCEinstance ; terraform init'
-          sh 'cd TERRAFORM/GCEinstance ; terraform plan -destroy  -out myplandestroy'
+          sh 'cd TERRAFORM/GKECluster ; terraform init'
+          sh 'cd TERRAFORM/GKECluster ; terraform plan -destroy  -out myplandestroy'
         }
     }
 
@@ -33,7 +33,7 @@ pipeline {
 
     stage('TF Destroy') {
       steps {
-          sh 'cd TERRAFORM/GCEinstance ;terraform apply -input=false myplandestroy'
+          sh 'cd TERRAFORM/GKECluster ;terraform apply -input=false myplandestroy'
         }
       }
 
