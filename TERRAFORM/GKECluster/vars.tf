@@ -23,3 +23,8 @@ variable "gke_num_nodes" {
   description = "number of gke nodes"
 }
 
+variable "bucket_name" {
+description = "GCS Bucket name. Value should be unique ."
+type        = string
+}
+
