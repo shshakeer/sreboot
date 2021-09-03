@@ -4,7 +4,7 @@ pipeline {
 
   environment {
     SVC_ACCOUNT_KEY = credentials('sreboot')
-	version= '${BUILD_NUMBER}'
+	version= ${BUILD_NUMBER}
 	image_tag= 'gcr.io/sreboot/my-web-server:$version'
 	
 	  }
