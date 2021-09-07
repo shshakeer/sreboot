@@ -1,6 +1,5 @@
 project_name = "sreboot"
 region = "us-central1"
 zone = "us-central1-a"
-cred_file = "/home/shakeer/sreboot-8641588bc51f.json"
+cred_file = "path/to/jsonfile/xx.json"
 network_name = "terraform-sreboot"
-bucket_name = "srebootstatefile-4848"

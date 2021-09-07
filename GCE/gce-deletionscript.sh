@@ -11,7 +11,7 @@ if [ $confirm = delete ]
 then
 echo "executing deletion script"
 
-gcloud compute instances delete $gce --project="$proj"
+gcloud compute instances delete $gce --project="$proj" --zone=asia-south1-c
 
 else
 echo "You have entered:  '$confirm' ,deletion script expects only 'delete' no other words accepted "

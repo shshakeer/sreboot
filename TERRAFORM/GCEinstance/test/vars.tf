@@ -18,7 +18,3 @@ variable "network_name" {
     type = string
 }
 
-variable "deletion_protection" {
-    type = string
-    default = false 
-}
