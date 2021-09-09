@@ -6,6 +6,6 @@ location = var.region
 terraform {
   backend "gcs" {
     bucket         = "srebootstatefilegke"
-    prefix         = "sreboot-website"
+    prefix         = "sreboot-websitejenkins"
   }
 }
