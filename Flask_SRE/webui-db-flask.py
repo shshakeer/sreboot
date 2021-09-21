@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Redhat@123@34.93.214.183/codethunder'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Redhat@123@34.93.189.160/codethunder'
 db = SQLAlchemy(app)
 
 
@@ -49,7 +49,7 @@ def contact():
 
 import mysql.connector
 mydb=mysql.connector.connect(
-    host="34.93.214.183",
+    host="34.93.189.160",
     user="root",
     password="Redhat@123",
     database="codethunder"
