@@ -13,7 +13,7 @@ spec:
     port: 80
     protocol: TCP
     targetPort: 5000
-    nodePort: 31313
+    nodePort: 31315
   selector:
     app: nginx
   type: LoadBalancer
