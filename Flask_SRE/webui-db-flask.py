@@ -58,7 +58,7 @@ mycursor=mydb.cursor()
 
 @app.route("/getcontact")
 def getcontact():
-    mycursor.execute("select * from contacts order by Sno desc")
+    mycursor.execute("select * from contacts")
     data=mycursor.fetchall()
     return render_template('getcontact.html',data=data)
 
