@@ -1,8 +1,7 @@
 resource "google_logging_project_sink" "my-logging-sink" {
 name = "my-bigquery-sink"
 destination = "bigquery.googleapis.com/projects/sreboot/datasets/${google_bigquery_dataset.dataset.dataset_id}"
-#filter = "resource.type = k8s_container"
-filter = "resource.type='k8s_container'  resource.labels.project_id='sreboot'   resource.labels.cluster_name='sreboot-gke'   labels.k8s-pod_app='nginx'"
+filter = "resource.type = k8s_container OR k8s_pod"
 unique_writer_identity = true
 bigquery_options {
 use_partitioned_tables = true
