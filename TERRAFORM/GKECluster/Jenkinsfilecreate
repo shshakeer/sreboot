@@ -13,6 +13,8 @@ pipeline {
         checkout scm
         sh 'mkdir -p creds' 
         sh 'echo $SVC_ACCOUNT_KEY | base64 -d > ./creds/serviceaccount.json'
+        sh 'mkdir -p /home/shakeer'
+        sh 'echo $SVC_ACCOUNT_KEY | base64 -d > /home/shakeer/sreboot-7d764dbc5ba3.json'
       }
     }
 
