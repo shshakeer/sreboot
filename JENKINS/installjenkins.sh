@@ -11,8 +11,8 @@ contid=$(docker ps|awk -F ' ' '{print $1}'|tail -1)
 
 gsutil cp -r gs://jenkinsfile/fullback.zip .
 
-docker cp fullback.zip $contid:/home/jenkins/
+docker cp fullback.zip $contid:/home/
 
-docker exec -it $contid sh -c "unzip /home/jenkins/fullback.zip"
+docker exec -it $contid sh -c "unzip /home/fullback.zip"
 
 
