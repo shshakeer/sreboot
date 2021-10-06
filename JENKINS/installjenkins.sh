@@ -13,6 +13,6 @@ gsutil cp -r gs://jenkinsfile/fullback.zip .
 
 docker cp fullback.zip $contid:/home/
 
-docker exec -it $contid sh -c "unzip /home/fullback.zip"
+docker exec -it $contid sh -c "unzip /home/fullback.zip -d /home/"
 
 
